@@ -281,3 +281,43 @@ flowchart
     </dependencies>
 </project> 
 ```
+
+# Dependency Management
+- Saat project kita sudah besar, kadang kita sering menggunakan banyak dependency.
+- Masalah dengan banyaknya dependency adalah, jika kita salah menggunakan dependency yang sama namun versinya berbeda-beda.
+- Maven mendukung fitur dependency management, dimana kita bisa memasukkan daftar dependency di parent module beserta versinya, lalu menambahkan dependency tersebut di module tanpa harus menggunakan versi-nya.
+- Secara otomatis versi dependency akan sama dengan yang ada di dependency management di parent module.
+- Kode: Dependency Management di Parent
+```xml
+<project>
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.junit.jupiter</groupId>
+                <artifactId>junit-jupiter</artifactId>
+                <version>${junit.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>belajar-java</groupId>
+                <artifactId>belajar-apache-maven-data</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+</project> 
+```
+- Kode: Dependency di Module
+```xml
+<project>
+    <dependencies>
+        <dependency>
+            <groupId>belajar-java</groupId>
+            <artifactId>belajar-apache-maven-data</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter</artifactId>
+        </dependency>
+    </dependencies>
+</project> 
+```
