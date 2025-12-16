@@ -233,3 +233,51 @@ flowchart
 - [Assembly Plugin](https://maven.apache.org/plugins/maven-assembly-plugin/usage.html).
 - Tidak hanya assembly plugin, sebenarnya masih banyak plugin lain yang bisa kita gunakan untuk membuat distribution file di Maven.
 - Untuk membuat distribution file, kita bisa menggunakan perintah ```mvn package assembly:single```.
+
+# Multi Module Project
+- Saat aplikasi kita sudah sangat besar, kadang ada baiknya kita buat aplikasi dalam bentuk modular.
+- Misal kita pisahkan module model, controller, view, service, repository, dan lain-lain.
+- Untungnya, Maven mendukung pembuatan project multi module.
+
+## Membuat Module Baru
+- Untuk membuat module baru, di dalam project yang sudah ada, kita hanya tinggal membuat folder baru, lalu menambahkan di setting pom.xml di folder tersebut.
+- Module harus memiliki parent, dimana parent-nya adalah project diatas folder tersebut.
+- Selanjutnya, di parent-nya pun, module harus di include.
+- Kode: Konfigurasi Module
+```xml
+<project>
+    <parent>
+        <artifactId>belajar-maven</artifactId>
+        <groupId>belajar-apache-maven</groupId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+    <artifactId>belajar-maven-data</artifactId>
+</project>
+```
+- Kode: Konfigurasi Parent
+```xml
+<project>
+    <modelVersion>4.0.0</modelVersion>
+    
+    <groupId>belajar-apache-maven</groupId>
+    <artifactId>belajar-maven</artifactId>
+    <packaging>pom</packaging>
+    <version>1.0-SNAPSHOT</version>
+    <modules>
+        <module>belajar-maven-data</module>
+    </modules>
+</project>
+```
+- Kode: Include Antar Module
+```xml
+<project>
+    <dependencies>
+        <dependency>
+            <groupId>belajar-apache-maven</groupId>
+            <artifactId>belajar-maven-data</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+    </dependencies>
+</project> 
+```
